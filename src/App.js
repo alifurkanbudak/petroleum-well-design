@@ -65,25 +65,34 @@ function App() {
     body = <SecondStep />;
   }
 
-  console.log("step: %d", step);
-
   return (
     <AppContext.Provider value={globalState}>
-      <Box>
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {appBar}
         <Stepper
           activeStep={step - 1}
           sx={{ width: "50%", margin: "auto", mt: 3 }}
         >
-          {steps.map((label, index) => {
-            return (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            );
-          })}
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
         </Stepper>
-        <Box sx={{ p: 4 }}>{body}</Box>
+        <Box
+          sx={{
+            p: 4,
+            flexGrow: 1,
+          }}
+        >
+          {body}
+        </Box>
       </Box>
     </AppContext.Provider>
   );

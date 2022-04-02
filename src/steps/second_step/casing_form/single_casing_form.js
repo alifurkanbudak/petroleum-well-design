@@ -1,6 +1,6 @@
 import { TextField, Typography, Box } from "@mui/material";
 
-export default function CasingForm(props) {
+export default function SingleCasingForm(props) {
   return (
     <Box
       sx={{
