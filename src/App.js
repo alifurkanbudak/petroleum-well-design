@@ -21,6 +21,11 @@ const steps = ["Enter well info", "Get suggestions", "Run Simulation"];
 
 function App() {
   const [step, setStep] = useState(1);
+  const [csvData, setCsvData] = React.useState([]);
+  const [waterData, setWaterData] = React.useState([]);
+  const [depth, setDepth] = React.useState();
+  const [x, setX] = React.useState();
+  const [y, setY] = React.useState();
 
   function prevStep() {
     setStep((s) => s - 1);
@@ -28,6 +33,15 @@ function App() {
 
   function nextStep() {
     setStep((s) => s + 1);
+  }
+
+  var inputState = {
+    depth,
+    x,
+    y,
+    setDepth: (d) => setDepth(d),
+    setX: (x) => setX(x),
+    setY: (y) => setY(y)
   }
 
   const globalState = {
@@ -60,9 +74,19 @@ function App() {
 
   var body;
   if (step === 1) {
-    body = <FirstStep />;
+    body = <FirstStep
+              csvData={csvData}
+              updateCsvData={setCsvData}
+              waterData={waterData}
+              updateWaterData={setWaterData}
+              inputState={inputState}
+            />;
   } else if (step === 2) {
-    body = <SecondStep />;
+    body = <SecondStep
+              csvData={csvData}
+              waterData={waterData}
+              inputState={inputState}
+            />;
   }
 
   return (

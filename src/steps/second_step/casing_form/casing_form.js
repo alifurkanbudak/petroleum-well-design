@@ -11,7 +11,12 @@ export default function CasingForm(props) {
         width: "34%",
       }}
     >
-      <Typography variant="h6">Casing Values</Typography>
+      <Typography
+        variant="h6"
+        align='center'
+      >
+        Casing Values
+      </Typography>
       <Divider sx={{ mb: 2 }} />
       <Typography variant="body1" component="div" sx={{ mb: 1 }}>
         Start and end depth values for each casing

@@ -9,7 +9,12 @@ export default function WellDrawing(props) {
         width: "33%",
       }}
     >
-      <Typography variant="h6">Well Visualization</Typography>
+      <Typography
+        variant="h6"
+        align='center'
+      >
+        Well Visualization
+      </Typography>
       <Divider sx={{ mb: 2 }} />
       <Box
         sx={{

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   TextField,
   Button,
@@ -9,13 +9,34 @@ import {
 import { ArrowForwardIosRounded } from "@mui/icons-material";
 import AppContext from "../../AppContext";
 import { useContext } from "react";
+import { csvToArray } from "../../functions";
 
-function FirstStep() {
+function FirstStep({csvData, updateCsvData, waterData, updateWaterData, inputState}) {
   const context = useContext(AppContext);
 
-  const [depth, setDepth] = React.useState();
-  const [x, setX] = React.useState();
-  const [y, setY] = React.useState();
+  var {depth, x, y, setDepth, setX, setY} = inputState;
+
+  useEffect(() => loadCSVs())
+
+  function loadCSVs() {
+    let input;
+    if (csvData.length === 0) {
+      input = './data.csv';
+      fetch(input)
+        .then( response => response.text() )
+        .then( responseText => {
+          updateCsvData(csvToArray(responseText));
+        });
+    }
+    if (waterData.length === 0) {
+      input = './water.csv';
+      fetch(input)
+        .then( response => response.text() )
+        .then( responseText => {
+          updateWaterData(csvToArray(responseText));
+        });
+    }
+  }
 
   return (
     <Box

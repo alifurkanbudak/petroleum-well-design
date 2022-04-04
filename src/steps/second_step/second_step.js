@@ -1,13 +1,31 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import WellDrawing from "./well_drawing/well_drawing";
 import Checks from "./checks/checks";
 import CasingForm from "./casing_form/casing_form";
+import { kNN } from "../../functions";
 
-export default function SecondStep() {
-  const [c1, setC1] = React.useState({ start: 0, end: 0 });
-  const [c2, setC2] = React.useState({ start: 0, end: 0 });
-  const [c3, setC3] = React.useState({ start: 0, end: 0 });
+export default function SecondStep({csvData, waterData, inputState}) {
+  const [c1, setC1] = useState({ start: 0, end: 0 });
+  const [c2, setC2] = useState({ start: 0, end: 0 });
+  const [c3, setC3] = useState({ start: 0, end: 0 });
+
+  var {depth, x, y} = inputState;
+
+  useEffect(() => {
+    console.log('Loaded Wells data: ', csvData)
+    console.log('Loaded Water data: ', waterData)
+    function updateCasing(C) {
+      let c = C.split('-');
+      return {start: parseInt(c[0]), end: parseInt(c[1])};
+    }
+    if (csvData.length !== 0) {
+      let casings = kNN(csvData, depth, x, y);
+      setC1(updateCasing(casings[0]));
+      setC2(updateCasing(casings[1]));
+      setC3(updateCasing(casings[2]));
+    }
+  }, [csvData, waterData, depth, x, y]);
 
   return (
     <Box
