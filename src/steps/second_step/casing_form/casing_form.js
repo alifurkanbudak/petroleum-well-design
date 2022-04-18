@@ -24,8 +24,9 @@ export default function CasingForm({
         Casing Values
       </Typography>
       <Divider sx={{ mb: 2 }} />
-      <Typography variant="body1" component="div" sx={{ mb: 1 }}>
-        Start and end depth values for each casing
+      <Typography variant="body2" component="div" sx={{ mb: 2 }}>
+        Start and end depth values for each casing. Initial values are suggested
+        by our algorithm as a starting point.
       </Typography>
       <SingleCasingForm ind={1} val={c1} setVal={setC1} depth={depth} />
       <SingleCasingForm ind={2} val={c2} setVal={setC2} depth={depth} />

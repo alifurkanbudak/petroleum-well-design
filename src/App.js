@@ -12,7 +12,7 @@ import {
   StepLabel,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-import FirstStep from "./steps/first_step/first_step";
+import { FirstStep } from "./steps/first_step/first_step";
 import { SecondStep } from "./steps/second_step/second_step";
 import { useState, useEffect } from "react";
 import { csvToArray } from "./functions";
