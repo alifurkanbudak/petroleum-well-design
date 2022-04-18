@@ -1,6 +1,7 @@
 import { TextField, Typography, Box } from "@mui/material";
+import { clamp } from "../../../functions";
 
-export default function SingleCasingForm(props) {
+export default function SingleCasingForm({ ind, val, setVal, depth }) {
   return (
     <Box
       sx={{
@@ -10,10 +11,10 @@ export default function SingleCasingForm(props) {
       }}
     >
       <Typography variant="h6" sx={{ textAlign: "left", mb: 1 }}>
-        Casing {props.ind}
+        Casing {ind}
       </Typography>
       <TextField
-        disabled={props.ind === 1}
+        disabled={ind === 1}
         label="Start"
         variant="filled"
         type="number"
@@ -22,11 +23,11 @@ export default function SingleCasingForm(props) {
           min: 0,
           max: 99999,
         }}
-        value={props.val.start}
+        value={val.start}
         onChange={(e) =>
-          props.setVal({
-            start: parseInt(e.target.value),
-            end: props.val.end,
+          setVal({
+            start: clamp(parseInt(e.target.value), 0, depth),
+            end: val.end,
           })
         }
       />
@@ -39,11 +40,11 @@ export default function SingleCasingForm(props) {
           max: 99999,
         }}
         sx={{ width: "120px" }}
-        value={props.val.end}
+        value={val.end}
         onChange={(e) =>
-          props.setVal({
-            end: parseInt(e.target.value),
-            start: props.val.start,
+          setVal({
+            end: clamp(parseInt(e.target.value), 0, depth),
+            start: val.start,
           })
         }
       />

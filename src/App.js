@@ -14,8 +14,8 @@ import {
 import { ArrowBack } from "@mui/icons-material";
 import FirstStep from "./steps/first_step/first_step";
 import SecondStep from "./steps/second_step/second_step";
-import AppContext from "./AppContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { csvToArray } from "./functions";
 
 const steps = ["Enter well info", "Get suggestions", "Run Simulation"];
 
@@ -41,14 +41,13 @@ function App() {
     y,
     setDepth: (d) => setDepth(d),
     setX: (x) => setX(x),
-    setY: (y) => setY(y)
-  }
-
-  const globalState = {
-    step: step,
-    nextStep: nextStep,
-    prevStep: prevStep,
+    setY: (y) => setY(y),
   };
+
+  useEffect(() => {
+    loadCsvData().then((res) => setCsvData(res));
+    loadWaterData().then((res) => setWaterData(res));
+  }, []);
 
   var appBar = (
     <AppBar position="static">
@@ -74,52 +73,68 @@ function App() {
 
   var body;
   if (step === 1) {
-    body = <FirstStep
-              csvData={csvData}
-              updateCsvData={setCsvData}
-              waterData={waterData}
-              updateWaterData={setWaterData}
-              inputState={inputState}
-            />;
+    body = (
+      <FirstStep
+        csvData={csvData}
+        setCsvData={setCsvData}
+        waterData={waterData}
+        setWaterData={setWaterData}
+        inputState={inputState}
+        nextStep={nextStep}
+      />
+    );
   } else if (step === 2) {
-    body = <SecondStep
-              csvData={csvData}
-              waterData={waterData}
-              inputState={inputState}
-            />;
+    body = (
+      <SecondStep
+        csvData={csvData}
+        waterData={waterData}
+        inputState={inputState}
+        nextStep={nextStep}
+      />
+    );
   }
 
   return (
-    <AppContext.Provider value={globalState}>
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {appBar}
+      <Stepper
+        activeStep={step - 1}
+        sx={{ width: "50%", margin: "auto", mt: 3 }}
+      >
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
       <Box
         sx={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
+          p: 4,
+          flexGrow: 1,
         }}
       >
-        {appBar}
-        <Stepper
-          activeStep={step - 1}
-          sx={{ width: "50%", margin: "auto", mt: 3 }}
-        >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <Box
-          sx={{
-            p: 4,
-            flexGrow: 1,
-          }}
-        >
-          {body}
-        </Box>
+        {body}
       </Box>
-    </AppContext.Provider>
+    </Box>
   );
+}
+
+async function loadCsvData() {
+  const res = await fetch("./data.csv");
+  return csvToArray(await res.text());
+}
+
+async function loadWaterData() {
+  const res = await fetch("./water.csv");
+  const waterDataArray = csvToArray(await res.text());
+
+  return waterDataArray.map((e) => e["Cw"].split("-").map((s) => parseInt(s)));
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   TextField,
   Button,
@@ -7,47 +7,11 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { ArrowForwardIosRounded } from "@mui/icons-material";
-import AppContext from "../../AppContext";
-import { useContext } from "react";
-import { csvToArray } from "../../functions";
+import { clamp } from "../../functions";
 
-function FirstStep({
-  csvData,
-  updateCsvData,
-  waterData,
-  updateWaterData,
-  inputState,
-}) {
-  const context = useContext(AppContext);
-
+function FirstStep({ inputState, nextStep }) {
   var { depth, x, y, setDepth, setX, setY } = inputState;
-
-  useEffect(() => loadCSVs());
-
-  function loadCSVs() {
-    let input;
-    if (csvData.length === 0) {
-      input = "./data.csv";
-      fetch(input)
-        .then((response) => response.text())
-        .then((responseText) => {
-          updateCsvData(csvToArray(responseText));
-        });
-    }
-    if (waterData.length === 0) {
-      input = "./water.csv";
-      fetch(input)
-        .then((response) => response.text())
-        .then((responseText) => {
-          var waterDataArray = csvToArray(responseText);
-          waterDataArray = waterDataArray.map((e) =>
-            e["Cw"].split("-").map((s) => parseInt(s))
-          );
-
-          updateWaterData(waterDataArray);
-        });
-    }
-  }
+  const canProceed = x <= 1000 && x >= 0 && y <= 1000 && y >= 0 && depth > 0;
 
   return (
     <Box
@@ -73,8 +37,10 @@ function FirstStep({
         }}
         sx={{ width: "256px" }}
       />
-      <Typography variant="body1" component="div" sx={{ mt: 6, mb: 1 }}>
-        Enter the coordinates. <br />
+      <Typography variant="body1" component="div" sx={{ mt: 6 }}>
+        Enter the coordinates.
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 1 }}>
         Each coordinate must be in between 0 and 1000
       </Typography>
       <Box sx={{ mb: 2 }}>
@@ -85,7 +51,7 @@ function FirstStep({
           sx={{ mr: 2, width: "120px" }}
           inputProps={{ max: 1000, min: 0 }}
           value={x || ""}
-          onChange={(e) => setX(e.target.value)}
+          onChange={(e) => setX(clamp(parseInt(e.target.value), 0, 1000))}
         />
         <TextField
           label="Y"
@@ -93,7 +59,7 @@ function FirstStep({
           type="number"
           inputProps={{ max: 1000, min: 0 }}
           value={y || ""}
-          onChange={(e) => setY(e.target.value)}
+          onChange={(e) => setY(clamp(parseInt(e.target.value), 0, 1000))}
           sx={{ width: "120px" }}
         />
       </Box>
@@ -109,7 +75,8 @@ function FirstStep({
           margin: "auto",
           width: "256px",
         }}
-        onClick={() => context.nextStep()}
+        onClick={() => nextStep()}
+        disabled={!canProceed}
       >
         Get Suggestions
       </Button>

@@ -10,23 +10,19 @@ export default function SecondStep({ csvData, waterData, inputState }) {
   const [c2, setC2] = useState({ start: 0, end: 0 });
   const [c3, setC3] = useState({ start: 0, end: 0 });
 
-  var { depth, x, y } = inputState;
+  const { depth, x, y } = inputState;
 
-  const processedWaterData = waterData.map((wd) => [
-    wd[0],
-    Math.min(depth, wd[1]),
-  ]);
+  const processedWaterData = waterData
+    .filter((wd) => wd[0] <= depth)
+    .map((wd) => [wd[0], Math.min(depth, wd[1])]);
 
   useEffect(() => {
-    function updateCasing(C) {
-      let c = C.split("-");
-      return { start: parseInt(c[0]), end: parseInt(c[1]) };
-    }
     if (csvData.length !== 0) {
       let casings = kNN(csvData, depth, x, y);
-      setC1(updateCasing(casings[0]));
-      setC2(updateCasing(casings[1]));
-      setC3(updateCasing(casings[2]));
+
+      setC1(casingStrToObj(casings[0]));
+      setC2(casingStrToObj(casings[1]));
+      setC3(casingStrToObj(casings[2]));
     }
   }, [csvData, depth, x, y]);
 
@@ -51,6 +47,7 @@ export default function SecondStep({ csvData, waterData, inputState }) {
         setC1={setC1}
         setC2={setC2}
         setC3={setC3}
+        depth={depth}
       />
       <Checks
         depth={depth}
@@ -61,4 +58,9 @@ export default function SecondStep({ csvData, waterData, inputState }) {
       />
     </Box>
   );
+}
+
+function casingStrToObj(C) {
+  let c = C.split("-");
+  return { start: parseInt(c[0]), end: parseInt(c[1]) };
 }
