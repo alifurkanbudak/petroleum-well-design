@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import Water from "./water";
 import WellWall from "./well_wall";
 
-export default function WellDrawing(props) {
+export default function WellDrawing({ c1, c2, c3, depth, waterData }) {
   return (
     <Box
       sx={{
@@ -22,8 +22,8 @@ export default function WellDrawing(props) {
           height: "calc(100% - 24px)",
         }}
       >
-        {props.waterData.map((wd) => (
-          <Water start={wd[0]} end={wd[1]} depth={props.depth} />
+        {waterData.map((wd) => (
+          <Water start={wd[0]} end={wd[1]} depth={depth} />
         ))}
 
         <Box
@@ -35,44 +35,44 @@ export default function WellDrawing(props) {
           }}
         >
           <WellWall
-            start={props.c1.start}
-            end={props.c1.end}
-            depth={props.depth}
+            start={c1.start}
+            end={c1.end}
+            depth={depth}
             index={0}
             left
           />
           <WellWall
-            start={props.c2.start}
-            end={props.c2.end}
-            depth={props.depth}
+            start={c2.start}
+            end={c2.end}
+            depth={depth}
             index={1}
             left
           />
           <WellWall
-            start={props.c3.start}
-            end={props.c3.end}
-            depth={props.depth}
+            start={c3.start}
+            end={c3.end}
+            depth={depth}
             index={2}
             left
           />
           <WellWall
-            start={props.c3.start}
-            end={props.c3.end}
-            depth={props.depth}
+            start={c3.start}
+            end={c3.end}
+            depth={depth}
             index={2}
             right
           />
           <WellWall
-            start={props.c2.start}
-            end={props.c2.end}
-            depth={props.depth}
+            start={c2.start}
+            end={c2.end}
+            depth={depth}
             index={1}
             right
           />
           <WellWall
-            start={props.c1.start}
-            end={props.c1.end}
-            depth={props.depth}
+            start={c1.start}
+            end={c1.end}
+            depth={depth}
             index={0}
             right
           />
@@ -89,7 +89,7 @@ export default function WellDrawing(props) {
             color: "brown",
           }}
         >
-          {props.depth + " meters"}
+          {depth + " meters"}
         </Typography>
         <Box
           sx={{

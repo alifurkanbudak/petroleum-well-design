@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { checkStatus } from "./checks";
+import { checkStatus } from "../second_step";
 
 export default function CheckItem({ status, text, explanation }) {
   return (

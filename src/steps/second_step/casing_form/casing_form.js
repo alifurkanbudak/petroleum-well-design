@@ -2,7 +2,16 @@ import { Button, Typography, Box, Divider } from "@mui/material";
 import { ArrowForwardIosRounded } from "@mui/icons-material";
 import SingleCasingForm from "./single_casing_form";
 
-export default function CasingForm({ c1, c2, c3, setC1, setC2, setC3, depth }) {
+export default function CasingForm({
+  c1,
+  c2,
+  c3,
+  setC1,
+  setC2,
+  setC3,
+  depth,
+  canProceed,
+}) {
   return (
     <Box
       sx={{
@@ -33,6 +42,7 @@ export default function CasingForm({ c1, c2, c3, setC1, setC2, setC3, depth }) {
           margin: "auto",
           width: "256px",
         }}
+        disabled={!canProceed}
       >
         Run Simulation
       </Button>
