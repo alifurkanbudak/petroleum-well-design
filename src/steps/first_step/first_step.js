@@ -11,29 +11,40 @@ import AppContext from "../../AppContext";
 import { useContext } from "react";
 import { csvToArray } from "../../functions";
 
-function FirstStep({csvData, updateCsvData, waterData, updateWaterData, inputState}) {
+function FirstStep({
+  csvData,
+  updateCsvData,
+  waterData,
+  updateWaterData,
+  inputState,
+}) {
   const context = useContext(AppContext);
 
-  var {depth, x, y, setDepth, setX, setY} = inputState;
+  var { depth, x, y, setDepth, setX, setY } = inputState;
 
-  useEffect(() => loadCSVs())
+  useEffect(() => loadCSVs());
 
   function loadCSVs() {
     let input;
     if (csvData.length === 0) {
-      input = './data.csv';
+      input = "./data.csv";
       fetch(input)
-        .then( response => response.text() )
-        .then( responseText => {
+        .then((response) => response.text())
+        .then((responseText) => {
           updateCsvData(csvToArray(responseText));
         });
     }
     if (waterData.length === 0) {
-      input = './water.csv';
+      input = "./water.csv";
       fetch(input)
-        .then( response => response.text() )
-        .then( responseText => {
-          updateWaterData(csvToArray(responseText));
+        .then((response) => response.text())
+        .then((responseText) => {
+          var waterDataArray = csvToArray(responseText);
+          waterDataArray = waterDataArray.map((e) =>
+            e["Cw"].split("-").map((s) => parseInt(s))
+          );
+
+          updateWaterData(waterDataArray);
         });
     }
   }

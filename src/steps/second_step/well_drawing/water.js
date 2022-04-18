@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-export default function WellWall(props) {
+export default function Water(props) {
   const top = (props.start / props.depth) * 100 + "%";
   const height = ((props.end - props.start) / props.depth) * 100 + "%";
 
@@ -9,15 +9,12 @@ export default function WellWall(props) {
       sx={{
         display: "block",
         position: "absolute",
-        width: "20px",
         top: top,
         height: height,
-        backgroundColor: "gray",
-        border: "solid",
-        borderWidth: "1px",
-        left: props.left ? 21 * props.index + "px" : null,
-        right: props.right ? 21 * props.index + "px" : null,
-        zIndex: 2,
+        backgroundColor: "#9cd3db",
+        left: 0,
+        right: 0,
+        zIndex: 1,
       }}
     ></Box>
   );

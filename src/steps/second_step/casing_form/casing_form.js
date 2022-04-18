@@ -11,10 +11,7 @@ export default function CasingForm(props) {
         width: "34%",
       }}
     >
-      <Typography
-        variant="h6"
-        align='center'
-      >
+      <Typography variant="h6" align="center">
         Casing Values
       </Typography>
       <Divider sx={{ mb: 2 }} />

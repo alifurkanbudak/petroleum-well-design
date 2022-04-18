@@ -13,6 +13,7 @@ export default function SingleCasingForm(props) {
         Casing {props.ind}
       </Typography>
       <TextField
+        disabled={props.ind === 1}
         label="Start"
         variant="filled"
         type="number"
@@ -24,7 +25,7 @@ export default function SingleCasingForm(props) {
         value={props.val.start}
         onChange={(e) =>
           props.setVal({
-            start: e.target.value,
+            start: parseInt(e.target.value),
             end: props.val.end,
           })
         }
@@ -41,7 +42,7 @@ export default function SingleCasingForm(props) {
         value={props.val.end}
         onChange={(e) =>
           props.setVal({
-            end: e.target.value,
+            end: parseInt(e.target.value),
             start: props.val.start,
           })
         }
