@@ -5,12 +5,9 @@ import Checks from "./checks/checks";
 import CasingForm from "./casing_form/casing_form";
 import { kNN } from "../../functions";
 
-function SecondStep({ csvData, waterData, inputState }) {
-  const [c1, setC1] = useState({ start: 0, end: 0 });
-  const [c2, setC2] = useState({ start: 0, end: 0 });
-  const [c3, setC3] = useState({ start: 0, end: 0 });
+function SecondStep({ csvData, waterData, inputState, nextStep }) {
 
-  const { depth, x, y } = inputState;
+  const { depth, x, y, c1, c2, c3, setC1, setC2, setC3 } = inputState;
 
   const processedWaterData = waterData
     .filter((wd) => wd[0] <= depth)
@@ -64,6 +61,7 @@ function SecondStep({ csvData, waterData, inputState }) {
         setC3={setC3}
         depth={depth}
         canProceed={canProceed}
+        nextStep={nextStep}
       />
       <Checks
         casingLengthCheck={casingLengthCheck}

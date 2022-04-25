@@ -11,6 +11,7 @@ export default function CasingForm({
   setC3,
   depth,
   canProceed,
+  nextStep
 }) {
   return (
     <Box
@@ -44,6 +45,7 @@ export default function CasingForm({
           width: "256px",
         }}
         disabled={!canProceed}
+        onClick={()=>nextStep()}
       >
         Run Simulation
       </Button>

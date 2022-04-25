@@ -22,8 +22,8 @@ export default function WellDrawing({ c1, c2, c3, depth, waterData }) {
           height: "calc(100% - 24px)",
         }}
       >
-        {waterData.map((wd) => (
-          <Water start={wd[0]} end={wd[1]} depth={depth} />
+        {waterData.map((wd,i) => (
+          <Water key={i} start={wd[0]} end={wd[1]} depth={depth} />
         ))}
 
         <Box

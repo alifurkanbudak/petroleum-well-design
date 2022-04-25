@@ -14,6 +14,7 @@ import {
 import { ArrowBack } from "@mui/icons-material";
 import { FirstStep } from "./steps/first_step/first_step";
 import { SecondStep } from "./steps/second_step/second_step";
+import { ThirdStep } from "./steps/third_step/third_step";
 import { useState, useEffect } from "react";
 import { csvToArray } from "./functions";
 
@@ -26,6 +27,9 @@ function App() {
   const [depth, setDepth] = React.useState();
   const [x, setX] = React.useState();
   const [y, setY] = React.useState();
+  const [c1, setC1] = useState({ start: 0, end: 0 });
+  const [c2, setC2] = useState({ start: 0, end: 0 });
+  const [c3, setC3] = useState({ start: 0, end: 0 });
 
   function prevStep() {
     setStep((s) => s - 1);
@@ -42,6 +46,12 @@ function App() {
     setDepth: (d) => setDepth(d),
     setX: (x) => setX(x),
     setY: (y) => setY(y),
+    c1,
+    c2,
+    c3,
+    setC1: (c) => setC1(c),
+    setC2: (c) => setC2(c),
+    setC3: (c) => setC3(c),
   };
 
   useEffect(() => {
@@ -88,6 +98,17 @@ function App() {
       <SecondStep
         csvData={csvData}
         waterData={waterData}
+        inputState={inputState}
+        nextStep={nextStep}
+      />
+    );
+  } else if (step === 3) {
+    body = (
+      <ThirdStep
+        csvData={csvData}
+        setCsvData={setCsvData}
+        waterData={waterData}
+        setWaterData={setWaterData}
         inputState={inputState}
         nextStep={nextStep}
       />
