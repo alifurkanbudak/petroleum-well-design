@@ -6,7 +6,6 @@ import CasingForm from "./casing_form/casing_form";
 import { kNN } from "../../functions";
 
 function SecondStep({ csvData, waterData, inputState, nextStep }) {
-
   const { depth, x, y, c1, c2, c3, setC1, setC2, setC3 } = inputState;
 
   const processedWaterData = waterData
@@ -122,10 +121,10 @@ function WaterLevelCheck(c1, c2, c3, waterData, depth) {
 
   var status = checkStatus.success;
 
-  if (c1.end < c2.start && IsWater(c1.end, c2.end, waterData)) {
+  if (c1.end < c2.start && IsWater(c1.end, c2.start, waterData)) {
     status = checkStatus.failed;
     explanation = "Water can enter from the gap between Casing 1 and Casing 2";
-  } else if (c2.end < c3.start && IsWater(c2.end, c3.end, waterData)) {
+  } else if (c2.end < c3.start && IsWater(c2.end, c3.start, waterData)) {
     status = checkStatus.failed;
     explanation = "Water can enter from the gap between Casing 2 and Casing 3";
   } else if (IsWater(c3.end, depth, waterData)) {

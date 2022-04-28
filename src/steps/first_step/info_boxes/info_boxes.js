@@ -9,7 +9,9 @@ export default function InfoBoxes({ focus }) {
     infoBox = (
       <InfoBox
         title="How the depth is used?"
-        text="We are using depth for suggestions by selecting other oil wells with similar depths."
+        text={
+          "We are using depth for suggestions by selecting other oil wells with similar depths. It will also be useful for the well design template in the next step."
+        }
       />
     );
   } else if (focus === focusState.coordinates) {
