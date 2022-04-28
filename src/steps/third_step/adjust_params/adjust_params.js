@@ -22,7 +22,7 @@ export default function AdjustParams({ sliderParams }) {
                     <Slider 
                         size='medium'
                         aria-label="Small"
-                        valueLabelDisplay="auto"
+                        valueLabelDisplay="on"
                         min={10}
                         max={110}
                         step={5}
